@@ -1,0 +1,37 @@
+# depslib dependency file v1.0
+1493632742 source:d:\a small c\projects\mandelbrotjulia\main.cpp
+	"MadelBrotJulia_cpu.h"
+	<string>
+
+1164931536 d:\a small c\projects\mandelbrotjulia\easybmp.h
+	<iostream>
+	<cmath>
+	<cctype>
+	<cstring>
+	<stdio.h>
+	<cstdio>
+	"EasyBMP_DataStructures.h"
+	"EasyBMP_BMP.h"
+	"EasyBMP_VariousBMPutilities.h"
+
+1164931354 d:\a small c\projects\mandelbrotjulia\easybmp_datastructures.h
+
+1164932432 d:\a small c\projects\mandelbrotjulia\easybmp_bmp.h
+
+1164931362 d:\a small c\projects\mandelbrotjulia\easybmp_variousbmputilities.h
+
+1493573390 d:\a small c\projects\mandelbrotjulia\madelbrotjulia.h
+	<iostream>
+	<cmath>
+	<vector>
+	<tuple>
+	"EasyBMP.h"
+
+1493632676 d:\a small c\projects\mandelbrotjulia\madelbrotjulia_cpu.h
+	<iostream>
+	<cmath>
+	<vector>
+	<tuple>
+	"EasyBMP.h"
+	<ctime>
+
