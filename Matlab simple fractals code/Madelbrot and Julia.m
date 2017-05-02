@@ -50,7 +50,7 @@ function TheM = main(x, y, iter, OutOfBounds)
 
   SqOfBounds = sqrt(OutOfBounds);
 
-  h = waitbar(0, 'please wait ... or do not and be DOOOOOOOMED!')
+%  h = waitbar(0, 'please wait ... or do not and be DOOOOOOOMED!')
   len = length(y);
   
 
@@ -68,10 +68,10 @@ function TheM = main(x, y, iter, OutOfBounds)
        end  %else
        
     end %j
-    waitbar( i / len);
+%    waitbar( i / len);
   end %i
   
-  close(h)
+%  close(h)
  
  
    
