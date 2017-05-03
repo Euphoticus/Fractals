@@ -48,13 +48,13 @@ tuple<double, double, double, double> CorrectRatio(    double x1, double x2, dou
 
 
 double CalculatePoint(double xc, double yc, int iter,  int InfinityValue){
-    double x, y = 0;
+    double x, y = 0;	// x is Real part,	y is imaginary part
 
 
-    for(int i = 0; i< iter    ; i++){
+    for(int i = 0; i< iter    ; i++){	// cycle through amount of iterations
 
-        double x2 = x*x;
-        double y2 = y*y;
+        double x2 = x*x;	
+        double y2 = y*y;	
 
         if(x2 + y2 < 4){
             y =  2*x*y + yc;
@@ -82,8 +82,7 @@ void CalculateMadel(int iter, double x1, double x2, double y1, double y2,   int 
 
     printf ("x: %.4f %.4f  y: %.4f %.4f       %.dx%.d \n", x1, x2, y1, y2, rwidth, rheight );
 
-    tie(x1, x2, y1, y2) = CorrectRatio( x1, x2 , y1, y2,  rwidth , rheight);
-
+    tie(x1, x2, y1, y2) = CorrectRatio( x1, x2 , y1, y2,  rwidth , rheight);	// correct coordinates and aspect
 
     printf ("x: %.4f %.4f  y: %.4f %.4f       %.dx%.d \n", x1, x2, y1, y2, rwidth, rheight );
 
@@ -92,14 +91,14 @@ void CalculateMadel(int iter, double x1, double x2, double y1, double y2,   int 
 
 
 // Initialise things:
- t = clock();
-    vector< vector<double>> ThePic(rwidth ,  vector<double>(rheight ) );
+   t = clock();
+    vector< vector<double>> ThePic(rwidth ,  vector<double>(rheight ) );		// array that holds each pixel, point
 
-    double xCh = abs(x1 - x2) / rwidth ;  // change of x for each iteration
+    double xCh = abs(x1 - x2) / rwidth ;  // the change of x for each iteration
     double yCh = abs(y1 - y2) / rheight ;
 
 
-    double xc = x1;    // x current
+    double xc = x1;    // x current coordinate    ,  it goes from x1,  up to x2
 
     for(int i = 0;  i < rwidth ; i++){
 
@@ -109,14 +108,12 @@ void CalculateMadel(int iter, double x1, double x2, double y1, double y2,   int 
             if(xc*xc + yc+yc >= 4){      //  if current point is outside of circle of r = 2,  then it is no longer Madelbrot set
                 ThePic[i][j] = InfinityValue ;
             }
-            else{
+            else{			// The point is within circle of r=2,   we calculate weather that point diverges or stays under 2
                 ThePic[i][j] = CalculatePoint(xc, yc, iter , InfinityValue) ;
             }
 
             yc += yCh;  // y increase
         } // for j
-
-     //   if( i % 100 == 0){   printf ("%.d / %.d \n" , i , rwidth );      }
 
         xc += xCh ;  // x increase
     } // for i
@@ -128,48 +125,43 @@ void CalculateMadel(int iter, double x1, double x2, double y1, double y2,   int 
 
     BMP Image;
     Image.SetSize( rwidth , rheight );
-    Image.SetBitDepth( 24 );
+    Image.SetBitDepth( 24 );	// color depth, 24 is quite high
 
 
-    for(int i = 0;  i < rwidth ; i++){
-            for(int j = rheight-1;  j >= 0 ; j--){
+	// assign color values for each pixel
+    for(int i = 0;  i < rwidth ; i++){	
+            for(int j = rheight-1;  j >= 0 ; j--){	// for bmp files we go from the top towards bottom  - otherwise image is inverted
 
             int j1 = rheight - j;
             if(ThePic[i][ j1 ] > 4  ){          //||  i == 2 || j1 == 2){  // == InfinityValue){         //i == j ){          //(ThePic[i][j] == InfinityValue){
                 Image(i,j)->Red=255;
                 Image(i,j)->Green=255;
                 Image(i,j)->Blue=255;
-                Image(i,j)->Alpha=255;
-            }else{
+//                Image(i,j)->Alpha=255;
+            }else{	
+				// Many colors version
                 Image(i,j)->Red=  fmod(ThePic[i][j1] * 20 ,2) *255 ; //(ThePic[i][j] * 200000 % 255   ;          // up to 128
                 Image(i,j)->Green= fmod(ThePic[i][j1]* 30 ,0.3) *255 ;
                 Image(i,j)->Blue= fmod(ThePic[i][j1]* 8 ,1.4) *255  ;
-                Image(i,j)->Alpha=0;
-/*                Image(i,j)->Red=0;
+				// black and white version
+//                Image(i,j)->Alpha=0;
+/*              Image(i,j)->Red=0;
                 Image(i,j)->Green=0;
                 Image(i,j)->Blue=0;
-                Image(i,j)->Alpha=0;  */
+//                Image(i,j)->Alpha=0;  */
             }
         } // j
     } // i
-    cout << ImageName << endl;
+
+ cout << ImageName << endl;
+
  if(T==true){printf (" image arrays:   %.d ms \n", 1000* ( clock() - t)/CLOCKS_PER_SEC );}
 
- t = clock();
+ t = clock();		// Save the image
     Image.WriteToFile( ImageName.c_str() );// "output.bmp");        // c_str() to convert a string to const char *
  if(T==true){printf (" image file:   %.d ms \n", 1000* ( clock() - t )/CLOCKS_PER_SEC );}
 
 }   // CalculateMadel
-
-
-
-/*          300 iters
-             300,  -2.0, 1.0 , -1.5 , 1.5
-
-               Image(i,j)->Red=  fmod(ThePic[i][j] * 20 ,2) *255 ; //(ThePic[i][j] * 200000 % 255   ;          // up to 128
-                Image(i,j)->Green= fmod(ThePic[i][j]* 30 ,0.3) *255 ;
-                Image(i,j)->Blue= fmod(ThePic[i][j]* 8 ,1.4) *255  ;
-*/
 
 
 
