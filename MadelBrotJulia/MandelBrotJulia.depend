@@ -35,3 +35,36 @@
 	"EasyBMP.h"
 	<ctime>
 
+1494155528 source:d:\a small c\projects\madelbrotjulia\main.cpp
+	"MadelBrotJulia_cpu.h"
+	"MadelBrotJulia_gpu.h"
+	<string>
+	"EasyBMP.h"
+
+1494154702 d:\a small c\projects\madelbrotjulia\madelbrotjulia_gpu.h
+	<iostream>
+	<cmath>
+	<ctime>
+
+1164931536 d:\a small c\projects\madelbrotjulia\easybmp.h
+	<iostream>
+	<cmath>
+	<cctype>
+	<cstring>
+	<stdio.h>
+	<cstdio>
+	"EasyBMP_DataStructures.h"
+	"EasyBMP_BMP.h"
+	"EasyBMP_VariousBMPutilities.h"
+
+1164931354 d:\a small c\projects\madelbrotjulia\easybmp_datastructures.h
+
+1164932432 d:\a small c\projects\madelbrotjulia\easybmp_bmp.h
+
+1164931362 d:\a small c\projects\madelbrotjulia\easybmp_variousbmputilities.h
+
+1494155434 d:\a small c\projects\madelbrotjulia\madelbrotjulia_cpu.h
+	<iostream>
+	<cmath>
+	<ctime>
+
