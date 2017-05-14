@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>60</y>
+      <y>50</y>
       <width>521</width>
       <height>271</height>
      </rect>
@@ -39,7 +39,7 @@
       <x>0</x>
       <y>0</y>
       <width>801</width>
-      <height>61</height>
+      <height>48</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -81,7 +81,7 @@
      <item row="0" column="7">
       <widget class="QLineEdit" name="RWidth">
        <property name="text">
-        <string>400</string>
+        <string>500</string>
        </property>
       </widget>
      </item>
@@ -134,17 +134,10 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="9">
+     <item row="0" column="9" rowspan="2">
       <widget class="QLabel" name="Coords">
        <property name="text">
         <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="9">
-      <widget class="QCheckBox" name="Show_coords">
-       <property name="text">
-        <string>Show Coords</string>
        </property>
       </widget>
      </item>

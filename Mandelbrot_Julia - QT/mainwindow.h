@@ -24,7 +24,10 @@ public:
 public slots:
     void MouseCoords( QPoint& m_pos );     // A signal from the_image calls this function (since it is connected to that signal)
     void TheZoom( QWheelEvent* wheel );     // it passes information about mouse position e.g
+    void NewCenter(  QPoint & m_pos  );
+
     void GenerateImage(double x_C , double y_C, double Sc);
+
 
 private:
     Ui::MainWindow *ui;

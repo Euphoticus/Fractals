@@ -1,0 +1,8 @@
+
+Scroll in/out  -  render zoomed it/out
+
+Right mouse click    -   Show current mouse coordinates 
+
+Left click    -   recenter to mouse pointer 
+
+

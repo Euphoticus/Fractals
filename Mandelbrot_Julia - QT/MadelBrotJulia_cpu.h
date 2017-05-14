@@ -119,13 +119,13 @@ unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic ){
             int pos = 4* (j*rwidth + i ) ;		// go through every width line, that's why line 2 will start at 2*rwidth 
             ThePic[ pos + 3]=0;     // alpha
 
-            if(xc*xc + yc*yc >= 4){      //  if current point is outside of circle of r = 2,  then it is no longer Madelbrot set
+  /*          if(xc*xc + yc*yc >= 4){      //  if current point is outside of circle of r = 2,  then it is no longer Madelbrot set
                 ThePic[ pos ]= 100; // 100;
                 ThePic[ pos + 1 ]= 40;    //0;
                 ThePic[ pos + 2 ]= 40;   // 0;
-            }
-            else{			// The point is within circle of r=2,   we calculate weather that point diverges or stays under 2
-                double Rez = CalculatePoint(0 , 0, xc, yc, iter) ;
+            }else{ */		// The point is within circle of r=2,   we calculate weather that point diverges or stays under 2
+
+   			   double Rez = CalculatePoint(0 , 0, xc, yc, iter) ;
          //       cout<< Rez  << endl;
                 if( Rez>0 ){        // Rez < 1 & Rez > 0   ){      // Rez < 1    if(Rez < 4){            	// Paint outside
 
@@ -158,16 +158,14 @@ unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic ){
                              }
 	
                    
-			//  ( - pow(4*Rez -1  , 2) + 1 )* 255 ;						   
-          //          ThePic[ pos + 1 ] =  ( - (Rez-0.5)*(Rez-0.5)   +0.5  ) * 255 ; //  * round( abs(1 - (Rez + 0.25) ) )  ;   //100 - (rez-0.5)*200;   //    40 + fmod( Rez*400 , 215 );     // G
-          //          ThePic[ pos + 2 ] =  ( - (Rez-0.75)*(Rez-0.75) +0.5  ) * 255 ; //  * round( abs(1 - (Rez + 0.5) ) )  ;   //40 + fmod( Rez*80 , 215 );                                    // R
+										//  ( - pow(4*Rez -1  , 2) + 1 )* 255;   ThePic[ pos + 2 ] =  ( - (Rez-0.75)*(Rez-0.75) +0.5  ) * 255 ; //  * round( abs(1 - (Rez + 0.5) ) )  ;   //40 + fmod( Rez*80 , 215 );                                    // R
 
                 }else{          // paint inside
                     ThePic[ pos ]=    0; //fmod( ( -1/Rez / 20000 - Rez * 20000 )   ,255) ;     // fmod( -1/Rez * 20 ,255) ;      //0;
                     ThePic[ pos + 1]=  0; //fmod( ( -1/Rez / 30000 - Rez * 30000 )   ,255) ;      // fmod( -1/Rez * 30 ,255) ;   // 0;
                     ThePic[ pos + 2]=  0;  //fmod( ( -1/Rez / 8000  - Rez * 8000)   ,255) ;       // fmod( -1/Rez * 8 ,255)  ;    //0;
                 }
-            }
+    //        } //  if(xc*xc + yc*yc >= 4){  
 
             xc += xCh ;  // x increase
         } // for j
