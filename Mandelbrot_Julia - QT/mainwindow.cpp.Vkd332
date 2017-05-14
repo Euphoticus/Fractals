@@ -1,0 +1,34 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+#include <iostream>
+#include <fstream>
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+
+void The_Image::mouseReleaseEvent(QMouseEvent *ev){
+    std::cout << "Mouse!" << std::endl;
+}
+
+
+//void The_Image::mouseMoveEvent()
+
+void The_Image::wheelEvent(QWheelEvent *event){
+    std::cout << "wheel!" << std::endl;
+
+//    The_Image::wheelEvent(event);
+}
+
+
+

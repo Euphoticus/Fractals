@@ -41,9 +41,11 @@ double CalculatePoint(double x, double y, double xc, double yc, int iter){
             x = x2 - y2 + xc;
         }
         else{
-            return  double(i);    //  double(iter);
-            //  return fmod(  ( i - log2(  log(x*x + y*y)/log( pow(10, 100)) )  )/300  , 0.999 )  ;
-            break;
+          //  return  double(i); // / double(iter);
+           // return fmod(  ( i - log2(  log(x*x + y*y)/log( pow(10, 100)) )  )/300  , 0.999 )  ;
+
+            return (   i + 1 - log2(  log(x*x + y*y) / 100000   )   )/ iter  ;
+            //break;
         }  // if
 
 
@@ -125,24 +127,35 @@ unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic ){
             else{			// The point is within circle of r=2,   we calculate weather that point diverges or stays under 2
                 double Rez = CalculatePoint(0 , 0, xc, yc, iter) ;
          //       cout<< Rez  << endl;
-                if( Rez < iter & Rez > 0   ){      // Rez < 1    if(Rez < 4){            	// Paint outside
+                if( Rez>0 ){        // Rez < 1 & Rez > 0   ){      // Rez < 1    if(Rez < 4){            	// Paint outside
 
-                    Rez = fmod ( Rez/100 , 1)  ;
-                    //Rez = -log(Rez);
+					//Rez = fmod ( Rez/100 , 1)  ;
+                    Rez = fmod( 2*Rez , 1  );
 
-                    if( Rez < 0.125){
-                            ThePic[ pos ]  = 100 + Rez*8*155;    // B
+                    if( Rez < 0.1){	// 0.125  ->  8
+                            Rez = 10*Rez;	//normalised 0-1
+                            ThePic[ pos ]  = 100 + Rez*100;    // B
                             ThePic[ pos+1 ] = 40;    	   // G
                             ThePic[ pos+2 ] = 40;   	  // R
-                    }else if(Rez < 0.625 ){
-                            ThePic[ pos ]  = (1 - 2*(Rez-0.125) )*255 ;     	// B
-                            ThePic[ pos+1 ] =  40+   (2*(Rez-0.125) )*215 ;    	   // G
-                            ThePic[ pos+2 ] =  40+   (2*(Rez-0.125) )*215 ;   	       // R
-                    }else{
-                            ThePic[ pos ]  = 3/8*(Rez-0.625) * 255 ;     	// B
-                            ThePic[ pos+1 ] = 255;    	   // G
-                            ThePic[ pos+2 ] = 255;   	       // R
-                    }
+							
+                    }else if(Rez < 0.5 ){	// 0.4  -> 5/2
+                            Rez = 5/2*(Rez-0.1);	//normalised 0-1
+                            ThePic[ pos ]  = (1 - Rez) *200 ;     	// B
+                            ThePic[ pos+1 ] =  40+   Rez *215 ;    	   // G
+                            ThePic[ pos+2 ] =  40+   Rez *215 ;   	       // R
+							
+                            }else if(Rez<0.8){	// 0.3  ->  10/3
+                                Rez = 10/3*(Rez-0.5);	//normalised 0-1
+                                ThePic[ pos ]  = 0;   // 255 ;     	// B
+                                ThePic[ pos+1 ] = 40 + (1-Rez)*215;    	   // G
+                                ThePic[ pos+2 ] = 255; //* (1 - 4/3*(Rez-0.625)  );   	       // R
+
+                            }else{  // 0.2  ->  5
+                                Rez = 5*(Rez-0.8);	//normalised 0-1
+                                ThePic[ pos ]  = Rez*100;   // 255 ;     	// B
+                                ThePic[ pos+1 ] = 40;    	   // G
+                                ThePic[ pos+2 ] = 40 + (1-Rez)*215; //* (1 - 4/3*(Rez-0.625)  );   	       // R
+                             }
 	
                    
 			//  ( - pow(4*Rez -1  , 2) + 1 )* 255 ;						   
