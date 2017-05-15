@@ -23,7 +23,15 @@ void the_image::mousePressEvent(QMouseEvent *M_event){      // If mouse is insid
 }
 
 void the_image::wheelEvent( QWheelEvent* wheel ){
-    emit ActivateZoom(wheel);
+
+    QPoint mouse_pos = wheel->pos();
+
+    if( wheel->angleDelta().y() > 0){                // Determine weather it is scrolled outwards or toward the user
+        emit ActivateZoom(mouse_pos, true);
+    }else{
+        emit ActivateZoom(mouse_pos, false);
+    }
+
 }
 
 

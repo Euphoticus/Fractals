@@ -10,20 +10,13 @@
 
 //#include <vector>
 
-// spalva pagal tai, kokioje iteracijoje sustojo -   paskutineje juoda,   per viduri, kazkokia spalvota spalva,    is pradziu - balta
-
-// galima issaugoti praeita iteracija,  ir skaiciuojant prizoominta skaiciuoti daugiau tasku
 
 
-//#include <chrono>   // measuring execution time
-#include <ctime>
+#include <ctime>   // measuring execution time
 
 // Right click on project ->  Build options  ->   Linker settngs  -> (in the "other linker settings" field,   type   EasyBMP.cpp     if code doesen't run)
 
 using namespace std;
-
-//  It would be faster to pass large array possibly by reference, than to make a copy - but i need to initialise it correctly  http://www.learncpp.com/cpp-tutorial/74a-returning-values-by-value-reference-and-address/
-
 
 
 double CalculatePoint(double x, double y, double xc, double yc, int iter){
@@ -44,7 +37,7 @@ double CalculatePoint(double x, double y, double xc, double yc, int iter){
           //  return  double(i); // / double(iter);
            // return fmod(  ( i - log2(  log(x*x + y*y)/log( pow(10, 100)) )  )/300  , 0.999 )  ;
 
-            return (   i + 1 - log2(  log(x*x + y*y) / 100000   )   )/ iter  ;
+            return (   i  + 1- log2(  log( x*x + y*y ) / 10000000   )   )  ;		
             //break;
         }  // if
 
@@ -89,7 +82,7 @@ double* CorrectRatio(   double* info  ){
 
 
 
-unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic ){
+unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic , bool ToJulia ){
     // x1 - x left,   x2 - x right,  y1 - y bottom,   y2 - y top,      iter - iterations,    rwidth,rheight - picture resolution
 
  long t = clock();  // bool T = true;
@@ -101,6 +94,8 @@ unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic ){
   double y2 = info[3];
   int rwidth = info[4];
   int rheight = info[5];
+  double Jx = info[6];
+  double Jy = info[7];
 
     cout << 4 * rwidth * rheight / 1000 << " KB       " <<  4 * rwidth * rheight / 1000000 << " MB" << endl;
 
@@ -118,54 +113,52 @@ unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic ){
 
             int pos = 4* (j*rwidth + i ) ;		// go through every width line, that's why line 2 will start at 2*rwidth 
             ThePic[ pos + 3]=0;     // alpha
+            double Rez = 0;
+            if(ToJulia){        // calculate Julia set
+                Rez = CalculatePoint( xc , yc, Jx , Jy, iter) ;
+             }else{         // calculate mandel
+                Rez = CalculatePoint(0 , 0, xc, yc, iter) ;
+             }
 
-  /*          if(xc*xc + yc*yc >= 4){      //  if current point is outside of circle of r = 2,  then it is no longer Madelbrot set
-                ThePic[ pos ]= 100; // 100;
-                ThePic[ pos + 1 ]= 40;    //0;
-                ThePic[ pos + 2 ]= 40;   // 0;
-            }else{ */		// The point is within circle of r=2,   we calculate weather that point diverges or stays under 2
-
-   			   double Rez = CalculatePoint(0 , 0, xc, yc, iter) ;
          //       cout<< Rez  << endl;
                 if( Rez>0 ){        // Rez < 1 & Rez > 0   ){      // Rez < 1    if(Rez < 4){            	// Paint outside
 
-					//Rez = fmod ( Rez/100 , 1)  ;
-                    Rez = fmod( 2*Rez , 1  );
+					Rez = fmod( Rez , 100 ) / 100  ;		// , 250 ) / 500 * 2;    //  / Iter
+                   // Rez = fmod( Rez , 1  );
 
-                    if( Rez < 0.1){	// 0.125  ->  8
+                    if( Rez < 0.1){	// 0.1  ->  10
                             Rez = 10*Rez;	//normalised 0-1
                             ThePic[ pos ]  = 100 + Rez*100;    // B
                             ThePic[ pos+1 ] = 40;    	   // G
                             ThePic[ pos+2 ] = 40;   	  // R
 							
-                    }else if(Rez < 0.5 ){	// 0.4  -> 5/2
-                            Rez = 5/2*(Rez-0.1);	//normalised 0-1
+                    }else if(Rez < 0.4 ){	// 0.3  -> 10/3
+                            Rez = 10/3*(Rez-0.1);	//normalised 0-1
                             ThePic[ pos ]  = (1 - Rez) *200 ;     	// B
                             ThePic[ pos+1 ] =  40+   Rez *215 ;    	   // G
                             ThePic[ pos+2 ] =  40+   Rez *215 ;   	       // R
 							
-                            }else if(Rez<0.8){	// 0.3  ->  10/3
-                                Rez = 10/3*(Rez-0.5);	//normalised 0-1
+                            }else if(Rez<0.7){	// 0.3  ->  10/3
+                                Rez = 10/3*(Rez-0.4);	//normalised 0-1
                                 ThePic[ pos ]  = 0;   // 255 ;     	// B
                                 ThePic[ pos+1 ] = 40 + (1-Rez)*215;    	   // G
                                 ThePic[ pos+2 ] = 255; //* (1 - 4/3*(Rez-0.625)  );   	       // R
 
-                            }else{  // 0.2  ->  5
-                                Rez = 5*(Rez-0.8);	//normalised 0-1
+                            }else{  // 0.3  ->  10/3
+                                Rez = 10/3*(Rez-0.7);	//normalised 0-1
                                 ThePic[ pos ]  = Rez*100;   // 255 ;     	// B
                                 ThePic[ pos+1 ] = 40;    	   // G
                                 ThePic[ pos+2 ] = 40 + (1-Rez)*215; //* (1 - 4/3*(Rez-0.625)  );   	       // R
                              }
 	
                    
-										//  ( - pow(4*Rez -1  , 2) + 1 )* 255;   ThePic[ pos + 2 ] =  ( - (Rez-0.75)*(Rez-0.75) +0.5  ) * 255 ; //  * round( abs(1 - (Rez + 0.5) ) )  ;   //40 + fmod( Rez*80 , 215 );                                    // R
+		//  ( - pow(4*Rez -1  , 2) + 1 )* 255;   ThePic[ pos + 2 ] =  ( - (Rez-0.75)*(Rez-0.75) +0.5  ) * 255 ; //  * round( abs(1 - (Rez + 0.5) ) )  ;   //40 + fmod( Rez*80 , 215 );                                    // R
 
                 }else{          // paint inside
                     ThePic[ pos ]=    0; //fmod( ( -1/Rez / 20000 - Rez * 20000 )   ,255) ;     // fmod( -1/Rez * 20 ,255) ;      //0;
                     ThePic[ pos + 1]=  0; //fmod( ( -1/Rez / 30000 - Rez * 30000 )   ,255) ;      // fmod( -1/Rez * 30 ,255) ;   // 0;
                     ThePic[ pos + 2]=  0;  //fmod( ( -1/Rez / 8000  - Rez * 8000)   ,255) ;       // fmod( -1/Rez * 8 ,255)  ;    //0;
                 }
-    //        } //  if(xc*xc + yc*yc >= 4){  
 
             xc += xCh ;  // x increase
         } // for j

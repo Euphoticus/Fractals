@@ -25,7 +25,7 @@ protected:
 
 signals:
     void ActivateMouseCoords(  QPoint & m_pos );      // The mouse event that called "mouseMoveEvent" function, activates this signal so it is sent to main window
-    void ActivateZoom( QWheelEvent* wheel );
+    void ActivateZoom( QPoint &mouse_pos , bool ZoomIn);
     void ActivateNewCenter(  QPoint & m_pos  );
 
 };
