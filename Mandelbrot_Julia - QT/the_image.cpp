@@ -9,7 +9,7 @@ the_image::the_image(QWidget* parent) : QLabel(parent)
 }
 
 
-void the_image::mousePressEvent(QMouseEvent *M_event){      // If mouse is inside the image area
+void the_image::mousePressEvent(QMouseEvent *M_event){      // If mouse is pressed inside the image area
 
     QPoint mouse_pos = M_event->pos();
 
@@ -27,9 +27,9 @@ void the_image::wheelEvent( QWheelEvent* wheel ){
     QPoint mouse_pos = wheel->pos();
 
     if( wheel->angleDelta().y() > 0){                // Determine weather it is scrolled outwards or toward the user
-        emit ActivateZoom(mouse_pos, true);
+        emit ActivateZoom(mouse_pos, true);     // zoom in
     }else{
-        emit ActivateZoom(mouse_pos, false);
+        emit ActivateZoom(mouse_pos, false);    // zoom out
     }
 
 }

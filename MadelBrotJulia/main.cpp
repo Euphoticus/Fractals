@@ -14,13 +14,14 @@ using namespace std;
 // Right click on project ->  Build options  ->   Linker settngs  -> (in the "other linker settings" field,   type   EasyBMP.cpp     if code doesen't run)
 
 
-void PrintImage(int iter, double* info, string ImageName ){
+void PrintImage(int iter, double* info, string ImageName ,  bool ToJulia){
     // info  - x1, x2, y1, y2 , rwidth , rheight
 
     printf ("x: %.4f %.4f  y: %.4f %.4f       %.f x %.f \n",  info[0],  info[1],  info[2],  info[3],  info[4],  info[5]  );
 
 long t = clock();
-    info = CorrectRatio(info);      // i get corrected coordinates,  so i can update UI now
+//    info = CorrectRatio(info);      // i get corrected coordinates,  so i can update UI now
+    info = CorrectRatio_gpu(info);      // i get corrected coordinates,  so i can update UI now
 printf (" CorrectRatio:   %.ld ms \n", 1000* ( clock() - t)/CLOCKS_PER_SEC );
 
     printf ("x: %.4f %.4f  y: %.4f %.4f       %.f x %.f \n",  info[0],  info[1],  info[2],  info[3],  info[4],  info[5]  );
@@ -28,9 +29,21 @@ printf (" CorrectRatio:   %.ld ms \n", 1000* ( clock() - t)/CLOCKS_PER_SEC );
     int rwidth = info[4];
     int rheight = info[5];
 
+
+
+
+
+
+
+
+
+
 //    unsigned char* ThePic[ 4 * rwidth * rheight ];   // 4 because it holds RGP and alpha
     unsigned char* ThePic = new unsigned char[ 4 * rwidth * rheight ];   // 4 because it holds RGP and alpha
-    ThePic = CalculateMadel(iter , info, ThePic );
+
+
+//    ThePic = CalculateMadel(iter , info, ThePic , ToJulia);
+    ThePic = CalculateMadel_gpu(iter , info, ThePic , ToJulia);
 
 
 t = clock();
@@ -39,10 +52,11 @@ t = clock();
     Image.SetBitDepth( 32 );	// color depth, 24 is quite high
 
 // assign color values for each pixel
-    for(int i = 0;  i < rwidth ; i++){
-        for(int j =0;  j < rheight;  j++){
 
-                int pos = 4* (i*rheight + j)  ;
+    for(int j =0;  j < rheight;  j++){
+        for(int i = 0;  i < rwidth ; i++){
+
+                int pos = 4* (j*rwidth+ i)  ;
 
                 int j1 = rheight - j - 1;   // for bmp files we go from the top towards bottom  - otherwise image is inverted
                 Image(i,j1)->Blue =int(  ThePic[ pos    ]);
@@ -51,6 +65,10 @@ t = clock();
                 Image(i,j1)->Alpha=int(  ThePic[ pos + 3  ]);
         } // j
     } // i
+
+
+
+
 
 cout << ImageName << endl;
 printf (" image arrays:   %.ld ms \n", 1000* ( clock() - t)/CLOCKS_PER_SEC );
@@ -74,11 +92,13 @@ int main()
 
  //  double info[] = { -0.1 , 0.1 , -0.1 , 0.1 ,       6000,  3000 };
 
-  double info[] = { 0.2501 , 0.6 , -0.0000001 , 0.0000001,       1200,  900 };
+//  double info[] = { 0.2501 , 0.6 , -0.0000001 , 0.0000001,       1200,  900  , 0 ,0 };
+
+double info[] = {  -2.0 , 0.6 , 0 , 1.1 ,       1200,  900  , 0 ,0 };
 
 
 
-    PrintImage(   300      , info ,   "output.bmp" );
+    PrintImage(   300      , info ,   "output.bmp"   , false   );
                 // iter    ,        ,   Image name
 
 

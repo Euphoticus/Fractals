@@ -52,6 +52,9 @@
      </item>
      <item row="1" column="9">
       <widget class="QLineEdit" name="Iterations">
+       <property name="toolTip">
+        <string>Iterations</string>
+       </property>
        <property name="text">
         <string>300</string>
        </property>
@@ -66,6 +69,9 @@
      </item>
      <item row="0" column="4">
       <widget class="QLineEdit" name="CorX">
+       <property name="toolTip">
+        <string>Center coordinate</string>
+       </property>
        <property name="text">
         <string>0</string>
        </property>
@@ -73,6 +79,9 @@
      </item>
      <item row="0" column="10">
       <widget class="QLineEdit" name="RWidth">
+       <property name="toolTip">
+        <string>Width in pixels</string>
+       </property>
        <property name="text">
         <string>500</string>
        </property>
@@ -80,6 +89,9 @@
      </item>
      <item row="1" column="7">
       <widget class="QLineEdit" name="Scale_multiplier">
+       <property name="toolTip">
+        <string>Scale order of magnitude</string>
+       </property>
        <property name="text">
         <string>0</string>
        </property>
@@ -87,6 +99,9 @@
      </item>
      <item row="0" column="11">
       <widget class="QLineEdit" name="RHeight">
+       <property name="toolTip">
+        <string>Height in pixels</string>
+       </property>
        <property name="text">
         <string>400</string>
        </property>
@@ -95,14 +110,14 @@
      <item row="1" column="5">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Scale_multiplier    10^</string>
+        <string>10^</string>
        </property>
       </widget>
      </item>
      <item row="0" column="5">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Scale    + - to sides</string>
+        <string>S</string>
        </property>
       </widget>
      </item>
@@ -115,6 +130,9 @@
      </item>
      <item row="1" column="11">
       <widget class="QLineEdit" name="Zoom_speed">
+       <property name="toolTip">
+        <string>Zoom speed, multiplier</string>
+       </property>
        <property name="text">
         <string>4</string>
        </property>
@@ -122,13 +140,19 @@
      </item>
      <item row="0" column="12" rowspan="2">
       <widget class="QLabel" name="Coords">
+       <property name="toolTip">
+        <string>Mouse coordinates</string>
+       </property>
        <property name="text">
-        <string>TextLabel</string>
+        <string>      </string>
        </property>
       </widget>
      </item>
      <item row="0" column="7">
       <widget class="QLineEdit" name="Scale">
+       <property name="toolTip">
+        <string>Scale  +- from center</string>
+       </property>
        <property name="text">
         <string>2</string>
        </property>
@@ -150,6 +174,9 @@
      </item>
      <item row="0" column="2">
       <widget class="QCheckBox" name="ToJulia">
+       <property name="toolTip">
+        <string>Julia set if checked</string>
+       </property>
        <property name="text">
         <string>J</string>
        </property>
@@ -157,6 +184,9 @@
      </item>
      <item row="1" column="2">
       <widget class="QCheckBox" name="ToSave">
+       <property name="toolTip">
+        <string>Save newly generated image</string>
+       </property>
        <property name="text">
         <string>S</string>
        </property>

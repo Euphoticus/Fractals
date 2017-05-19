@@ -18,13 +18,12 @@ public:
     the_image(QWidget* parent = 0);
 
 protected:
-//    void mouseMoveEvent(QMouseEvent* M_event);
-    void mousePressEvent(QMouseEvent* M_event);     // We watch for the mouse events - if one happened this calls "mouseMoveEvent" function
+    void mousePressEvent(QMouseEvent* M_event);     // We watch for the mouse events
     void wheelEvent(  QWheelEvent* wheel );
  //   void mouseReleaseEvent(QMouseEvent* M_event);
 
 signals:
-    void ActivateMouseCoords(  QPoint & m_pos );      // The mouse event that called "mouseMoveEvent" function, activates this signal so it is sent to main window
+    void ActivateMouseCoords(  QPoint & m_pos );      // The mouse event that called "mousePressEvent" function, activates this signal so it is sent to main window
     void ActivateZoom( QPoint &mouse_pos , bool ZoomIn);
     void ActivateNewCenter(  QPoint & m_pos  );
 

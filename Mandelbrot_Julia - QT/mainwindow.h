@@ -18,7 +18,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    double ARx, ARy = 0;    // for aspect ratio,  scale is square only
+    double ARx, ARy = 0;    // for aspect ratio,   because scale is square only  , but resolution may not be
     double MxC, MyC, MSc, MSc_mul = 0;  // info to save for switching between Julia and mandel   -  Coordinates of center and scale info
 
 public slots:
