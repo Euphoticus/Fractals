@@ -11,6 +11,9 @@
 #include  <ctime>  // For saving of image - preventing overwrites
 #include <iomanip>
 
+#include <ctime>   // measuring execution time
+
+
 // #include <string>  // to_string
 
 
@@ -44,7 +47,7 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::GenerateImage(double x_C , double y_C, double Sc){     // This function generated image and shows it
-                        // mouse coordinates in pixels  Sc-  entire scale, entire square to calculate in
+              // mouse coordinates in pixels  Sc-  entire scale, entire square to calculate in
 
               // for Julia set
     double Jx, Jy = 0;

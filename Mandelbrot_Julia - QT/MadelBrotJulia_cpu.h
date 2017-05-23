@@ -79,7 +79,7 @@ double* CorrectRatio(   double* info  ){
 unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic , bool ToJulia ){   
 			// info -  x1 - x left,   x2 - x right,  y1 - y bottom,   y2 - y top,          rwidth,rheight - picture resolution
 
-long t = clock();  // bool T = true;
+long t = clock();  					// bool T = true;
 
 
   double x1 = info[0];		// x1 - kairysis x asies sonas
