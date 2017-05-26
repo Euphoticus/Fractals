@@ -30,15 +30,6 @@ printf (" CorrectRatio:   %.ld ms \n", 1000* ( clock() - t)/CLOCKS_PER_SEC );
     int rheight = info[5];
 
 
-
-
-
-
-
-
-
-
-//    unsigned char* ThePic[ 4 * rwidth * rheight ];   // 4 because it holds RGP and alpha
     unsigned char* ThePic = new unsigned char[ 4 * rwidth * rheight ];   // 4 because it holds RGP and alpha
 
 
@@ -74,7 +65,7 @@ cout << ImageName << endl;
 printf (" image arrays:   %.ld ms \n", 1000* ( clock() - t)/CLOCKS_PER_SEC );
 
 t = clock();		// Save the image
-    Image.WriteToFile( ImageName.c_str() );// "output.bmp");        // c_str() to convert a string to const char *
+    Image.WriteToFile( ImageName.c_str() );
 printf (" image file:   %.ld ms \n", 1000* ( clock() - t )/CLOCKS_PER_SEC );
 
  }  // PrintImage
@@ -94,11 +85,11 @@ int main()
 
 //  double info[] = { 0.2501 , 0.6 , -0.0000001 , 0.0000001,       1200,  900  , 0 ,0 };
 
-double info[] = {  -2.0 , 0.6 , 0 , 1.1 ,       1200,  900  , 0 ,0 };
+double info[] = {  -2.0 , 0.6 , 0 , 1.1 ,       2400,  1500  , 0 ,0 };
 
 
 
-    PrintImage(   300      , info ,   "output.bmp"   , false   );
+    PrintImage(   500      , info ,   "output.bmp"   , false   );
                 // iter    ,        ,   Image name
 
 

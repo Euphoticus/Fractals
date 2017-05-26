@@ -27,7 +27,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     the_image.cpp
 
+OTHER_FILES +=  MadelBrotJulia_mcpu.h  #\
+                 #MadelBrotJulia_cpu.h
+
+
 HEADERS  += mainwindow.h \
     the_image.h
 
 FORMS    += mainwindow.ui
+
+
+
+QMAKE_CXXFLAGS += -fopenmp      # qt has built in support for openMP
+LIBS += -fopenmp
+

@@ -1,5 +1,5 @@
-#ifndef MadelBrotJulia_cpu_H
-#define MadelBrotJulia_cpu_H
+#ifndef MadelBrotJulia_mcpu_H
+#define MadelBrotJulia_mcpu_H
 
 
 #include <iostream>   // debugging output
@@ -7,10 +7,15 @@
 
 #include <math.h>      // log
 
-
 #include <ctime>   // measuring execution time
 
+#include <omp.h>        // for parrarelisation
+#include <stdio.h>      // for parrarelisation
+
 using namespace std;
+
+
+
 
 
 
@@ -94,6 +99,7 @@ if( Rez>0 ){   // Jei grazintoji verte yra didesne uz nuli  - mes piesiame uz ma
 
     Rez = fmod( Rez , 100 ) / 100  ;		// , 250 ) / 500 * 2;    // Rez = fmod( Rez , 1  );
 
+    #pragma omp critical
     if( Rez < 0.1){	// 0.1  ->  10                  Melyneja        (is sviesiai melynos)
         Rez = 10*Rez;	//normalised 0-1
 
@@ -125,6 +131,7 @@ if( Rez>0 ){   // Jei grazintoji verte yra didesne uz nuli  - mes piesiame uz ma
 
     }
     else{      // rezultatas mazesnis uz 0,  piesiame viduje mandelbrot figuros
+        #pragma omp critical
         BGR[ 0 ]=  0; 		// 0, 0 ,0 - juoda spalva
         BGR[ 1 ]=  0;
         BGR[ 2 ]=  0;
@@ -144,7 +151,7 @@ return BGR;
 
 //----------------------------------------------------------------------------------------------
     // Kiekvieno pikselio spalvos pagrindine skaiciavimo funkcija
-unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic , bool ToJulia ){
+unsigned char* CalculateMadel(int iter, double* info,  unsigned char* ThePic , bool ToJulia ){   
 
 long t = clock();  					// bool T = true;
 
@@ -160,16 +167,25 @@ long t = clock();  					// bool T = true;
   double Jx = info[6];		// Julia C parametrai   realioji dalis
   double Jy = info[7];  // menamoji dalis
 
+  
+                // cout << "Estimation of memory needed for picture   " << 4 * rwidth * rheight / 1000 << " KB  " <<  4 * rwidth * rheight / 1000000 << " MB" << endl;
 
-                //cout << "Estimation of memory needed for picture   " << 4 * rwidth * rheight / 1000 << " KB  " <<  4 * rwidth * rheight / 1000000 << " MB" << endl;
-
-            // Suskaiciuojame, kiek pakis x ir y  per kiekviena iteracija - tai priklauso nuo rezoliucijos
-    double xCh = abs(x1 - x2) / rwidth ;
+			// Suskaiciuojame, kiek pakis x ir y  per kiekviena iteracija - tai priklauso nuo rezoliucijos
+    double xCh = abs(x1 - x2) / rwidth ;  
     double yCh = abs(y1 - y2) / rheight ;
 
 
 
+     cout << "max threads " <<  omp_get_max_threads() << endl;
+          //  omp_set_num_threads(2);
+          //  cout << "procs "<< omp_get_num_procs() << endl;       // private(BGR)        // static - i lygias dalis      private(yc)
+
+
+
+    #pragma omp parallel for shared(ThePic)
     for(int j = 0;  j < rheight ; j++){
+                          //if(j==0){   cout << "threads " << omp_get_num_threads() << endl;  }    // num treads
+
 
         int BGR1[] = {0 ,0 , 0};             // inicializuojam spalvu masyva
         int* BGR = BGR1;
@@ -182,10 +198,10 @@ long t = clock();  					// bool T = true;
                                // einame kas eilute, horizontaliai i virsu
                                // 4 *   nes yra alfa, R, G , B				  , i - I kuria verte irasome toje eiluteje
                                 //  j -toji eilute dauginama is verciu skaicius toje eiluteje
-            int pos = 4* (j*rwidth + i ) ;
-
+            int pos = 4* (j*rwidth + i ) ;		
+			
                                  // ThePic[ pos + 3]=0;     // irasoma alfa verte (nebutina)
-
+			
             double Rez = 0;		// inicializuojamas Rez
 
             if(ToJulia){                 //  Skaiciuojame Julia
@@ -198,8 +214,11 @@ long t = clock();  					// bool T = true;
 
             BGR = GetColors(Rez  , BGR);        // perdave Rez, gauname atitinkamas spalvas
 
+            #pragma omp critical             // #pragma omp atomic
             ThePic[ pos ]  = BGR[0];   // B
+            #pragma omp critical
             ThePic[ pos+1 ] = BGR[1];  // G
+            #pragma omp critical
             ThePic[ pos+2 ] = BGR[2];  // R
 
         } // for j
@@ -208,7 +227,7 @@ long t = clock();  					// bool T = true;
 
  printf (" for:   %.ld ms \n", 1000* ( clock() - t )/CLOCKS_PER_SEC );
 
-    return ThePic;
+	return ThePic;
 
 }   // CalculateMadel
 

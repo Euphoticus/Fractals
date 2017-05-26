@@ -1,8 +1,13 @@
+
+#include "MadelBrotJulia_mcpu.h"
+//#include "MadelBrotJulia_cpu.h"       // comment mcpu out and uncomment this - to launch single core version
+
+
+
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "the_image.h"
-
-#include "MadelBrotJulia_cpu.h"
 
 #include <iostream> // output for debugging e.g
 #include <fstream>
@@ -86,8 +91,8 @@ void MainWindow::GenerateImage(double x_C , double y_C, double Sc){     // This 
     ThePic = CalculateMadel(   iter , info, ThePic  ,  ui->ToJulia->isChecked() );   // calculate  -  iterations, coordinates,  char array pointer,   Weather to calculate Julia or Mandel
 
 // REMOVE LATER
-    int pos = 4* (rheight/2*rwidth + rwidth/2 );                                            // FOR color smoothness         DELETE later
-    printf("                B: %d  , G: %d  , R: %d \n" , ThePic[ pos  ] , ThePic[ pos+1], ThePic[pos+2] );
+//int pos = 4* (rheight/2*rwidth + rwidth/2 );                                            // FOR color smoothness         DELETE later
+//printf("                B: %d  , G: %d  , R: %d \n" , ThePic[ pos  ] , ThePic[ pos+1], ThePic[pos+2] );
 
              // pass the image to QPixmap object     and  the  QPixmap object can pass it's data directly to the field which shows image
     QPixmap p = QPixmap::fromImage(img);

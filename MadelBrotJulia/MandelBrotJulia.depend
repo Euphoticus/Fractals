@@ -35,13 +35,13 @@
 	"EasyBMP.h"
 	<ctime>
 
-1495194576 source:d:\a small c\projects\madelbrotjulia\main.cpp
+1495803684 source:d:\a small c\projects\madelbrotjulia\main.cpp
 	"MadelBrotJulia_cpu.h"
 	"MadelBrotJulia_gpu.h"
 	<string>
 	"EasyBMP.h"
 
-1495194702 d:\a small c\projects\madelbrotjulia\madelbrotjulia_gpu.h
+1495195108 d:\a small c\projects\madelbrotjulia\madelbrotjulia_gpu.h
 	<iostream>
 	<cmath>
 	<math.h>
@@ -64,7 +64,7 @@
 
 1164931362 d:\a small c\projects\madelbrotjulia\easybmp_variousbmputilities.h
 
-1495193494 d:\a small c\projects\madelbrotjulia\madelbrotjulia_cpu.h
+1495803824 d:\a small c\projects\madelbrotjulia\madelbrotjulia_cpu.h
 	<iostream>
 	<cmath>
 	<math.h>

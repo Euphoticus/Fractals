@@ -56,7 +56,7 @@
         <string>Iterations</string>
        </property>
        <property name="text">
-        <string>300</string>
+        <string>8000</string>
        </property>
       </widget>
      </item>
@@ -83,7 +83,7 @@
         <string>Width in pixels</string>
        </property>
        <property name="text">
-        <string>500</string>
+        <string>810</string>
        </property>
       </widget>
      </item>
@@ -103,7 +103,7 @@
         <string>Height in pixels</string>
        </property>
        <property name="text">
-        <string>400</string>
+        <string>520</string>
        </property>
       </widget>
      </item>
@@ -144,7 +144,7 @@
         <string>Mouse coordinates</string>
        </property>
        <property name="text">
-        <string>      </string>
+        <string/>
        </property>
       </widget>
      </item>
